@@ -16,19 +16,15 @@ pipeline {
         '''
       }
     }
-    stage('Dotnet Publish') {
-      steps {
-        sh 'dotnet publish panz.csproj -c Release'
-      }   
-    }
+	  
    stage('Docker build and push') {
       steps {
         sh '''
          whoami
          DOCKER_LOGIN_PASSWORD=$(aws ecr get-login-password  --region ap-south-1)
-         docker login -u AWS -p $DOCKER_LOGIN_PASSWORD https://971076122335.dkr.ecr.ap-south-1.amazonaws.com
-         docker build -t 971076122335.dkr.ecr.ap-south-1.amazonaws.com/sample:SAMPLE-PROJECT-${BUILD_NUMBER} .
-         docker push 971076122335.dkr.ecr.ap-south-1.amazonaws.com/sample:SAMPLE-PROJECT-${BUILD_NUMBER}
+         docker login -u AWS -p $DOCKER_LOGIN_PASSWORD https://157805893071.dkr.ecr.ap-south-1.amazonaws.com
+         docker build -t demoecr:latest 157805893071.dkr.ecr.ap-south-1.amazonaws.com/demoecr:SAMPLE-PROJECT-${BUILD_NUMBER} .
+         docker push demoecr:latest 157805893071.dkr.ecr.ap-south-1.amazonaws.com/demoecr:SAMPLE-PROJECT-${BUILD_NUMBER}
           
 	  '''
      }   
